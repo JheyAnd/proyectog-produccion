@@ -4,7 +4,7 @@ import os
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import text
 
-DATABASE_URL = "mysql+aiomysql://root:SessionsAdmin159**@192.168.10.153:3306/proyectog-prueba"
+DATABASE_URL = "mysql+aiomysql://root:SessionsAdmin159**@192.168.10.153:3306/proyectog-produccion"
 
 async def main():
     engine = create_async_engine(DATABASE_URL)
