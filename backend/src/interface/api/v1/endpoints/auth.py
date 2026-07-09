@@ -37,6 +37,41 @@ class UserUpdateRequest(BaseModel):
     allowed_projects: Optional[str] = None
     module_features: Optional[str] = None
 
+def map_user_response(user):
+    import json
+    
+    allowed_directors = user.allowed_directors
+    if allowed_directors and allowed_directors != "ALL":
+        try:
+            allowed_directors = json.loads(allowed_directors)
+        except:
+            pass
+            
+    allowed_projects = user.allowed_projects
+    if allowed_projects and allowed_projects != "ALL":
+        try:
+            allowed_projects = json.loads(allowed_projects)
+        except:
+            pass
+            
+    module_features = user.module_features
+    if module_features:
+        try:
+            module_features = json.loads(module_features)
+        except:
+            pass
+            
+    return {
+        "id": user.id,
+        "email": user.email,
+        "full_name": user.full_name,
+        "role": user.role,
+        "is_active": user.is_active,
+        "allowed_directors": allowed_directors or "ALL",
+        "allowed_projects": allowed_projects or "ALL",
+        "module_features": module_features or {}
+    }
+
 @router.get("/me")
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(_bearer),
@@ -85,16 +120,7 @@ async def get_current_user(
             detail="Tu cuenta ha sido desactivada. Contacta al administrador."
         )
     
-    return {
-        "id": user.id,
-        "email": user.email,
-        "full_name": user.full_name,
-        "role": user.role,
-        "is_active": user.is_active,
-        "allowed_directors": user.allowed_directors,
-        "allowed_projects": user.allowed_projects,
-        "module_features": user.module_features
-    }
+    return map_user_response(user)
 
 
 @router.post("/login")
@@ -186,16 +212,7 @@ async def login(
     return {
         "access_token": token,
         "token_type": "bearer",
-        "user": {
-            "id": user.id,
-            "email": user.email,
-            "full_name": user.full_name,
-            "role": user.role,
-            "is_active": user.is_active,
-            "allowed_directors": user.allowed_directors,
-            "allowed_projects": user.allowed_projects,
-            "module_features": user.module_features
-        }
+        "user": map_user_response(user)
     }
 
 @router.post("/validate-token")
@@ -276,16 +293,7 @@ async def validate_token(
     return {
         "access_token": validate_data.token,
         "token_type": "bearer",
-        "user": {
-            "id": user.id,
-            "email": user.email,
-            "full_name": user.full_name,
-            "role": user.role,
-            "is_active": user.is_active,
-            "allowed_directors": user.allowed_directors,
-            "allowed_projects": user.allowed_projects,
-            "module_features": user.module_features
-        }
+        "user": map_user_response(user)
     }
 
 async def sync_pandora_roles(user_service: UserService):
@@ -314,14 +322,7 @@ async def list_users(
     # Mapear a la respuesta esperada por el frontend
     return [
         {
-            "id": u.id,
-            "email": u.email,
-            "full_name": u.full_name,
-            "role": u.role,
-            "is_active": u.is_active,
-            "allowed_directors": u.allowed_directors,
-            "allowed_projects": u.allowed_projects,
-            "module_features": u.module_features,
+            **map_user_response(u),
             "last_login": None, # o la fecha correspondiente si está en el modelo
             "created_at": None
         }
@@ -369,16 +370,7 @@ async def create_user(
     # Sincronizar accesos con Pandora
     await sync_pandora_roles(user_service)
     
-    return {
-        "id": local_user.id,
-        "email": local_user.email,
-        "full_name": local_user.full_name,
-        "role": local_user.role,
-        "is_active": local_user.is_active,
-        "allowed_directors": local_user.allowed_directors,
-        "allowed_projects": local_user.allowed_projects,
-        "module_features": local_user.module_features
-    }
+    return map_user_response(local_user)
 
 @router.put("/users/{user_id}")
 async def update_user(
@@ -419,16 +411,7 @@ async def update_user(
     if needs_sync:
         await sync_pandora_roles(user_service)
         
-    return {
-        "id": local_user.id,
-        "email": local_user.email,
-        "full_name": local_user.full_name,
-        "role": local_user.role,
-        "is_active": local_user.is_active,
-        "allowed_directors": local_user.allowed_directors,
-        "allowed_projects": local_user.allowed_projects,
-        "module_features": local_user.module_features
-    }
+    return map_user_response(local_user)
 
 @router.delete("/users/{user_id}")
 async def delete_user(
