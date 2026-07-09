@@ -89,10 +89,9 @@ export default function ProjectsPage() {
   const normalize = (str: string) => 
     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-  const filteredProjects = useMemo(() => {
+  const userProjects = useMemo(() => {
     let list = [...projects];
 
-    // 1. RLS: Filtro por rol de usuario (Directores y Proyectos)
     if (user) {
       // Filtro por Directores
       if (user.allowed_directors !== 'ALL') {
@@ -120,6 +119,11 @@ export default function ProjectsPage() {
         }
       }
     }
+    return list;
+  }, [projects, user]);
+
+  const filteredProjects = useMemo(() => {
+    let list = [...userProjects];
 
     // 2. Filtro de estado
     if (statusFilter !== 'all') {
@@ -143,15 +147,15 @@ export default function ProjectsPage() {
       );
     }
     return list;
-  }, [projects, searchTerm, statusFilter, companyFilter, user]);
+  }, [userProjects, searchTerm, statusFilter, companyFilter]);
 
   const stats = useMemo(() => ({
-    total: projects.filter(p => projectStatus(p) !== 'eliminado').length,
-    active: projects.filter(p => projectStatus(p) === 'en_progreso').length,
-    completed: projects.filter(p => projectStatus(p) === 'completado').length,
-    overdue: projects.filter(p => projectStatus(p) === 'atrasado').length,
-    deleted: projects.filter(p => projectStatus(p) === 'eliminado').length,
-  }), [projects]);
+    total: userProjects.filter(p => projectStatus(p) !== 'eliminado').length,
+    active: userProjects.filter(p => projectStatus(p) === 'en_progreso').length,
+    completed: userProjects.filter(p => projectStatus(p) === 'completado').length,
+    overdue: userProjects.filter(p => projectStatus(p) === 'atrasado').length,
+    deleted: userProjects.filter(p => projectStatus(p) === 'eliminado').length,
+  }), [userProjects]);
 
   // Tipos de eliminación
   const [deleteType, setDeleteType] = useState<'soft' | 'hard'>('soft');
