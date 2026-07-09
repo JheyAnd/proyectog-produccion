@@ -35,4 +35,4 @@ class CashFlowEntryModel(Base):
     )
 
     # Relationships
-    project = relationship("ProjectModel", back_populates="cash_flow_entries")
+    project = relationship("ProjectModel")

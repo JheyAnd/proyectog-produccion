@@ -882,7 +882,8 @@ export default function BusinessCasePage() {
   }
 
   // ✅ EMPTY STATE: Proyecto en configuración si no tiene ambos presupuestos VALIDADOS
-  const isEmptyProject = !esLYRA && (!ventaOK || !costoOK);
+  const esBypassed = projectId === 'lyra-carsan-oe2000' || projectId === 'patio-sur-oe1035';
+  const isEmptyProject = !esBypassed && (!ventaOK || !costoOK);
 
   const esProyectoUSD = projectInfo?.currency === 'USD';
 

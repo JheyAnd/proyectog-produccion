@@ -40,7 +40,7 @@ class ProjectModel(Base):
     budget_items = relationship("BudgetItemModel", back_populates="project", cascade="all, delete-orphan")
     transactions = relationship("TransactionModel", back_populates="project", cascade="all, delete-orphan")
     invoices = relationship("InvoiceModel", back_populates="project", cascade="all, delete-orphan")
-    cash_flow_entries = relationship("CashFlowEntryModel", back_populates="project", cascade="all, delete-orphan")
+    # cash_flow_entries = relationship("CashFlowEntryModel", back_populates="project", cascade="all, delete-orphan")
     alerts = relationship("ProjectAlertModel", back_populates="project", cascade="all, delete-orphan")
     entregables = relationship("EntregableModel", back_populates="project", cascade="all, delete-orphan")
     pendings = relationship("ProjectPendingModel", back_populates="project", cascade="all, delete-orphan")

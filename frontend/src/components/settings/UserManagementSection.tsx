@@ -167,6 +167,7 @@ export default function UserManagementSection() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [userSearchTerm, setUserSearchTerm] = useState('');
 
+  // Cargar lista inicial de usuarios del tenant al abrir el modal
   useEffect(() => {
     if (showCreateModal && tenantUsers.length === 0) {
       const fetchTenantUsers = async () => {
@@ -185,6 +186,33 @@ export default function UserManagementSection() {
       fetchTenantUsers();
     }
   }, [showCreateModal]);
+
+  // Buscar según escribe el usuario (con debounce)
+  useEffect(() => {
+    const trimmed = userSearchTerm.trim();
+    if (!trimmed || trimmed.length < 2) return;
+
+    // Si ya seleccionamos un usuario y el término de búsqueda coincide con su formato de selección, no buscamos
+    if (newUser.email && (trimmed === newUser.full_name || trimmed.includes(newUser.email))) {
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setIsSearchingTenant(true);
+      try {
+        const res = await searchTenantUsersAPI(trimmed);
+        if (res?.success && Array.isArray(res.users)) {
+          setTenantUsers(res.users);
+        }
+      } catch (e) {
+        console.error("Error searching tenant users:", e);
+      } finally {
+        setIsSearchingTenant(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [userSearchTerm, newUser.email, newUser.full_name]);
 
   const handleCreateUser = async () => {
     setCreateError(null);
@@ -1142,10 +1170,16 @@ export default function UserManagementSection() {
                 {showUserDropdown && userSearchTerm && (
                   <div className="absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white dark:bg-steel-800 border border-steel-200 dark:border-steel-700 rounded-lg shadow-xl z-50">
                     {tenantUsers
-                      .filter(u => 
-                        u.displayName?.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
-                        u.email?.toLowerCase().includes(userSearchTerm.toLowerCase())
-                      )
+                      .filter(u => {
+                        const term = userSearchTerm.toLowerCase();
+                        if (newUser.email && (term === newUser.full_name?.toLowerCase() || term.includes(newUser.email.toLowerCase()))) {
+                          return true;
+                        }
+                        return (
+                          u.displayName?.toLowerCase().includes(term) || 
+                          u.email?.toLowerCase().includes(term)
+                        );
+                      })
                       .map((u, i) => (
                         <button
                           key={i}
@@ -1165,10 +1199,16 @@ export default function UserManagementSection() {
                           <span className="text-[10px] text-primary-600 dark:text-primary-400">{u.jobTitle || 'Empleado'} • {u.department || 'N/A'}</span>
                         </button>
                     ))}
-                    {tenantUsers.filter(u => 
-                        u.displayName?.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
-                        u.email?.toLowerCase().includes(userSearchTerm.toLowerCase())
-                    ).length === 0 && (
+                    {tenantUsers.filter(u => {
+                        const term = userSearchTerm.toLowerCase();
+                        if (newUser.email && (term === newUser.full_name?.toLowerCase() || term.includes(newUser.email.toLowerCase()))) {
+                          return true;
+                        }
+                        return (
+                          u.displayName?.toLowerCase().includes(term) || 
+                          u.email?.toLowerCase().includes(term)
+                        );
+                    }).length === 0 && (
                       <div className="px-4 py-3 text-sm text-steel-500 text-center">
                         No se encontraron usuarios
                       </div>
