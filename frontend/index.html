@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patio Sur - Gestión de Proyectos</title>
+    <!-- Script bloqueante: aplica dark class ANTES de que React monte.
+         Esto evita el flash de tema incorrecto (FOUC). -->
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('app_theme_mode');
+          if (mode === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

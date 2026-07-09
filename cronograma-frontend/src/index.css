@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* HTML y body base styles */
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply text-steel-700 bg-steel-50 antialiased font-sans;
+    @apply dark:bg-steel-950 dark:text-steel-200;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Elementos base en dark mode */
+  .dark {
+    color-scheme: dark;
+    --chart-grid: #374151;
+  }
+
+  /* Links */
+  a {
+    @apply transition-colors text-primary-600 hover:text-primary-700;
+    @apply dark:text-primary-400 dark:hover:text-primary-300;
+  }
+
+  /* Headings */
+  h1 {
+    @apply text-h1 text-steel-900 dark:text-white font-semibold;
+  }
+
+  h2 {
+    @apply text-h2 text-steel-900 dark:text-white font-semibold;
+  }
+
+  h3 {
+    @apply text-h3 text-steel-900 dark:text-white font-semibold;
+  }
+
+  /* Inputs y textareas */
+  input,
+  textarea,
+  select {
+    @apply bg-white dark:bg-steel-800;
+    @apply text-steel-900 dark:text-steel-100;
+    @apply border border-steel-300 dark:border-steel-600;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply outline-none ring-2 ring-primary-500;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    @apply dark:opacity-50;
+  }
+
+  /* Buttons base */
+  button {
+    @apply transition-all duration-200;
+  }
+
+  /* Tables */
+  table {
+    @apply border-collapse w-full;
+  }
+
+  thead {
+    @apply bg-steel-50 dark:bg-steel-900;
+  }
+
+  tbody tr {
+    @apply border-b border-steel-200 dark:border-steel-700;
+    @apply hover:bg-steel-50 dark:hover:bg-steel-800/50 transition-colors;
+  }
+
+  th,
+  td {
+    @apply px-6 py-4 sm:px-4 sm:py-3 text-left text-body-sm;
+  }
+}
+
+@layer components {
+  /* PC Mejia branded scrollbar */
+  .scrollbar-pcm::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-pcm::-webkit-scrollbar-track {
+    @apply bg-steel-100 dark:bg-steel-900;
+  }
+
+  .scrollbar-pcm::-webkit-scrollbar-thumb {
+    @apply bg-steel-300 dark:bg-steel-700 rounded-full;
+  }
+
+  .scrollbar-pcm::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-400 dark:bg-primary-500;
+  }
+
+  /* Card component - Legacy */
+  .card {
+    @apply bg-white dark:bg-steel-800;
+    @apply border border-steel-200 dark:border-steel-700;
+    @apply rounded-xl shadow-sm hover:shadow-card-hover;
+  }
+
+  /* Badge component - Legacy */
+  .badge {
+    @apply px-2.5 py-1 rounded-full text-body-xs font-semibold;
+    @apply bg-primary-100 text-primary-700;
+    @apply dark:bg-primary-950/30 dark:text-primary-300;
+  }
+
+  /* Alert/Info boxes */
+  .alert-info {
+    @apply bg-primary-50 dark:bg-primary-950/30;
+    @apply border border-primary-200 dark:border-primary-800;
+    @apply text-primary-800 dark:text-primary-300;
+    @apply rounded-lg p-4;
+  }
+
+  .alert-success {
+    @apply bg-success-50 dark:bg-success-950/30;
+    @apply border border-success-200 dark:border-success-800;
+    @apply text-success-800 dark:text-success-300;
+    @apply rounded-lg p-4;
+  }
+
+  .alert-warning {
+    @apply bg-warning-50 dark:bg-warning-950/30;
+    @apply border border-warning-200 dark:border-warning-800;
+    @apply text-warning-800 dark:text-warning-300;
+    @apply rounded-lg p-4;
+  }
+
+  .alert-error {
+    @apply bg-danger-50 dark:bg-danger-950/30;
+    @apply border border-danger-200 dark:border-danger-800;
+    @apply text-danger-800 dark:text-danger-300;
+    @apply rounded-lg p-4;
+  }
+
+  /* Focus ring utilities */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply dark:focus:ring-offset-steel-900;
+  }
+
+  /* Responsive container */
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Typography utilities - available directly from Tailwind config */
+
+  /* Ocultar flechas en TODOS los inputs numéricos del sistema */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
+    appearance: none;
+  }
+
+  /* Mobile-first utilities */
+  @media (max-width: 640px) {
+    .hidden-mobile {
+      @apply hidden;
+    }
+
+    .text-responsive-h1 {
+      @apply text-display-sm;
+    }
+
+    .text-responsive-h2 {
+      @apply text-h3;
+    }
+
+    .p-responsive {
+      @apply p-4;
+    }
+
+    .gap-responsive {
+      @apply gap-2;
+    }
+  }
+
+  /* Reduced motion: respeta preferencia del sistema operativo */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .hidden-desktop {
+      @apply hidden;
+    }
+
+    .text-responsive-h1 {
+      @apply text-h1;
+    }
+
+    .text-responsive-h2 {
+      @apply text-h2;
+    }
+
+    .p-responsive {
+      @apply p-6;
+    }
+
+    .gap-responsive {
+      @apply gap-4;
+    }
+  }
+}

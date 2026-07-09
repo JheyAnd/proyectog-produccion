@@ -1,0 +1,217 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient: deep tech blue -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1a3a6b"/>
+      <stop offset="100%" stop-color="#0a1e3d"/>
+    </radialGradient>
+    <!-- Fuselage silver gradient -->
+    <linearGradient id="fuseGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e0e8f4"/>
+      <stop offset="40%" stop-color="#b8c8dc"/>
+      <stop offset="100%" stop-color="#8a9aac"/>
+    </linearGradient>
+    <!-- Head gradient -->
+    <radialGradient id="headGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#d4dce8"/>
+      <stop offset="100%" stop-color="#7a8a9c"/>
+    </radialGradient>
+    <!-- Wing gradient -->
+    <linearGradient id="wingGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c8d8e8"/>
+      <stop offset="100%" stop-color="#8898a8"/>
+    </linearGradient>
+    <!-- Eye glow -->
+    <radialGradient id="eyeGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#80d4ff"/>
+      <stop offset="70%" stop-color="#0090e0"/>
+      <stop offset="100%" stop-color="#0050a0"/>
+    </radialGradient>
+    <!-- Propeller -->
+    <linearGradient id="propGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a0b0c0"/>
+      <stop offset="50%" stop-color="#d0e0f0"/>
+      <stop offset="100%" stop-color="#a0b0c0"/>
+    </linearGradient>
+    <!-- Helmet leather -->
+    <linearGradient id="helmetGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5E3C"/>
+      <stop offset="100%" stop-color="#5C3A1E"/>
+    </linearGradient>
+    <!-- Goggle glass -->
+    <radialGradient id="goggleGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#c8e8ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#406080" stop-opacity="0.8"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="eyeGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bgGrad)"/>
+
+  <!-- Tech circuit lines background -->
+  <g stroke="#1b5eab" stroke-width="0.8" opacity="0.3">
+    <line x1="0" y1="60" x2="120" y2="60"/><line x1="120" y1="60" x2="120" y2="100"/>
+    <line x1="280" y1="60" x2="400" y2="60"/><line x1="280" y1="60" x2="280" y2="100"/>
+    <line x1="0" y1="340" x2="80" y2="340"/><line x1="80" y1="340" x2="80" y2="300"/>
+    <line x1="320" y1="340" x2="400" y2="340"/><line x1="320" y1="340" x2="320" y2="300"/>
+    <line x1="30" y1="150" x2="80" y2="150"/><line x1="30" y1="170" x2="70" y2="170"/>
+    <line x1="320" y1="150" x2="370" y2="150"/><line x1="330" y1="170" x2="370" y2="170"/>
+    <!-- Circles (tech nodes) -->
+    <circle cx="120" cy="60" r="3" fill="#1b5eab" opacity="0.5"/>
+    <circle cx="280" cy="60" r="3" fill="#1b5eab" opacity="0.5"/>
+    <circle cx="80" cy="340" r="3" fill="#1b5eab" opacity="0.5"/>
+    <circle cx="320" cy="340" r="3" fill="#1b5eab" opacity="0.5"/>
+  </g>
+
+  <!-- ── LEFT WING ── -->
+  <g filter="url(#shadow)">
+    <!-- Wing main -->
+    <ellipse cx="110" cy="260" rx="90" ry="22" fill="url(#wingGrad)" transform="rotate(-8 110 260)"/>
+    <!-- Wing highlight -->
+    <ellipse cx="95" cy="250" rx="65" ry="8" fill="white" opacity="0.3" transform="rotate(-8 95 250)"/>
+    <!-- Wing rivet lines -->
+    <line x1="50" y1="248" x2="180" y2="258" stroke="#8898a8" stroke-width="0.8" opacity="0.6"/>
+  </g>
+
+  <!-- ── RIGHT WING ── -->
+  <g filter="url(#shadow)">
+    <ellipse cx="290" cy="260" rx="90" ry="22" fill="url(#wingGrad)" transform="rotate(8 290 260)"/>
+    <ellipse cx="305" cy="250" rx="65" ry="8" fill="white" opacity="0.3" transform="rotate(8 305 250)"/>
+    <line x1="220" y1="258" x2="350" y2="248" stroke="#8898a8" stroke-width="0.8" opacity="0.6"/>
+  </g>
+
+  <!-- ── LEFT PROPELLER ── -->
+  <g transform="translate(60, 260)">
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="8" fill="#6a7a8a" stroke="#8898a8" stroke-width="1"/>
+    <!-- Blades -->
+    <ellipse cx="0" cy="0" rx="5" ry="32" fill="url(#propGrad)" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="32" ry="5" fill="url(#propGrad)" opacity="0.9"/>
+    <!-- Center rivet -->
+    <circle cx="0" cy="0" r="4" fill="#a0b0c0"/>
+    <circle cx="0" cy="0" r="2" fill="#d0e0f0"/>
+  </g>
+
+  <!-- ── RIGHT PROPELLER ── -->
+  <g transform="translate(340, 260)">
+    <circle cx="0" cy="0" r="8" fill="#6a7a8a" stroke="#8898a8" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="5" ry="32" fill="url(#propGrad)" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="32" ry="5" fill="url(#propGrad)" opacity="0.9"/>
+    <circle cx="0" cy="0" r="4" fill="#a0b0c0"/>
+    <circle cx="0" cy="0" r="2" fill="#d0e0f0"/>
+  </g>
+
+  <!-- ── FUSELAGE (body) ── -->
+  <g filter="url(#shadow)">
+    <!-- Main fuselage oval -->
+    <ellipse cx="200" cy="270" rx="95" ry="75" fill="url(#fuseGrad)"/>
+    <!-- Fuselage highlight -->
+    <ellipse cx="180" cy="230" rx="60" ry="30" fill="white" opacity="0.25"/>
+    <!-- Fuselage panel lines -->
+    <line x1="120" y1="265" x2="280" y2="265" stroke="#8898a8" stroke-width="0.8" opacity="0.5"/>
+    <line x1="115" y1="280" x2="285" y2="280" stroke="#8898a8" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Inner oval (label area) -->
+    <ellipse cx="200" cy="275" rx="68" ry="52" fill="#d8e8f4" stroke="#8898a8" stroke-width="1.5"/>
+    <!-- "PaCo Mejía" label -->
+    <text x="200" y="266" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b5eab" font-family="Arial, sans-serif">PaCo</text>
+    <text x="200" y="285" font-size="14" font-weight="600" text-anchor="middle" fill="#1b5eab" font-family="Arial, sans-serif">Mejía</text>
+
+    <!-- Rivets decorativos -->
+    <circle cx="130" cy="258" r="3" fill="#8898a8"/>
+    <circle cx="270" cy="258" r="3" fill="#8898a8"/>
+    <circle cx="128" cy="280" r="3" fill="#8898a8"/>
+    <circle cx="272" cy="280" r="3" fill="#8898a8"/>
+  </g>
+
+  <!-- ── HEAD (robot) ── -->
+  <g filter="url(#shadow)">
+    <!-- Neck -->
+    <rect x="186" y="190" width="28" height="22" rx="4" fill="url(#fuseGrad)"/>
+    <!-- Head shape: rounded rectangle -->
+    <rect x="155" y="120" width="90" height="80" rx="38" fill="url(#headGrad)"/>
+    <!-- Head highlight -->
+    <ellipse cx="190" cy="130" rx="30" ry="18" fill="white" opacity="0.3"/>
+    <!-- Head screws -->
+    <circle cx="163" cy="128" r="4" fill="#7a8a9c" stroke="#6a7a8a" stroke-width="1"/>
+    <circle cx="237" cy="128" r="4" fill="#7a8a9c" stroke="#6a7a8a" stroke-width="1"/>
+  </g>
+
+  <!-- ── AVIATOR HELMET ── -->
+  <g>
+    <!-- Helmet cap -->
+    <path d="M 158 148 Q 165 105 200 100 Q 235 105 242 148 Q 220 138 200 137 Q 180 138 158 148 Z" fill="url(#helmetGrad)"/>
+    <!-- Leather texture highlight -->
+    <path d="M 175 118 Q 200 110 225 118" stroke="#c08040" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M 168 132 Q 200 120 232 132" stroke="#c08040" stroke-width="2" fill="none" opacity="0.4"/>
+    <!-- Helmet strap sides -->
+    <rect x="154" y="140" width="14" height="30" rx="5" fill="url(#helmetGrad)"/>
+    <rect x="232" y="140" width="14" height="30" rx="5" fill="url(#helmetGrad)"/>
+    <!-- Strap buckle -->
+    <rect x="154" y="165" width="14" height="8" rx="2" fill="#c08040"/>
+    <rect x="232" y="165" width="14" height="8" rx="2" fill="#c08040"/>
+  </g>
+
+  <!-- ── GOGGLES ── -->
+  <g>
+    <!-- Goggle band (connects the two lenses) -->
+    <rect x="166" y="150" width="68" height="12" rx="4" fill="#8B5E3C" stroke="#5C3A1E" stroke-width="1"/>
+    <!-- Center bridge -->
+    <rect x="193" y="151" width="14" height="10" rx="3" fill="#5C3A1E"/>
+
+    <!-- Left goggle frame -->
+    <circle cx="179" cy="156" r="20" fill="#5C3A1E" stroke="#3a2010" stroke-width="2"/>
+    <!-- Left goggle lens -->
+    <circle cx="179" cy="156" r="15" fill="url(#goggleGrad)" stroke="#406080" stroke-width="1.5"/>
+
+    <!-- Right goggle frame -->
+    <circle cx="221" cy="156" r="20" fill="#5C3A1E" stroke="#3a2010" stroke-width="2"/>
+    <!-- Right goggle lens -->
+    <circle cx="221" cy="156" r="15" fill="url(#goggleGrad)" stroke="#406080" stroke-width="1.5"/>
+
+    <!-- Goggle reflections -->
+    <ellipse cx="173" cy="149" rx="6" ry="4" fill="white" opacity="0.5" transform="rotate(-20 173 149)"/>
+    <ellipse cx="215" cy="149" rx="6" ry="4" fill="white" opacity="0.5" transform="rotate(-20 215 149)"/>
+  </g>
+
+  <!-- ── EYES (below goggles — visible through lens) ── -->
+  <g filter="url(#eyeGlow)">
+    <!-- Left eye glow ring -->
+    <circle cx="179" cy="159" r="10" fill="url(#eyeGrad)" opacity="0.9"/>
+    <circle cx="179" cy="159" r="6" fill="#00c8ff"/>
+    <circle cx="179" cy="159" r="3" fill="white" opacity="0.7"/>
+
+    <!-- Right eye glow ring -->
+    <circle cx="221" cy="159" r="10" fill="url(#eyeGrad)" opacity="0.9"/>
+    <circle cx="221" cy="159" r="6" fill="#00c8ff"/>
+    <circle cx="221" cy="159" r="3" fill="white" opacity="0.7"/>
+  </g>
+
+  <!-- ── TAIL / RUDDER ── -->
+  <g filter="url(#shadow)">
+    <!-- Vertical stabilizer -->
+    <path d="M 196 330 Q 195 370 205 375 Q 215 370 204 330 Z" fill="url(#fuseGrad)"/>
+    <!-- Horizontal stabilizers -->
+    <ellipse cx="200" cy="348" rx="45" ry="10" fill="url(#wingGrad)" transform="rotate(0)"/>
+  </g>
+
+  <!-- ── NOSE (front of fuselage) ── -->
+  <g filter="url(#shadow)">
+    <ellipse cx="200" cy="202" rx="40" ry="18" fill="url(#fuseGrad)"/>
+    <ellipse cx="200" cy="200" rx="26" ry="10" fill="white" opacity="0.2"/>
+  </g>
+
+  <!-- Bottom glow circle (ambient light under plane) -->
+  <ellipse cx="200" cy="385" rx="70" ry="10" fill="#1b5eab" opacity="0.3"/>
+</svg>

@@ -1,0 +1,93 @@
+// ============================================
+// EVM / CLAUSULA / GARANTIAS — DESHABILITADO TEMPORALMENTE
+// Para reintegrar: ver PROMPT DE REINTEGRACIÓN EVM
+// Fecha de deshabilitación: 12 de Mayo de 2026
+// Aplica para todos los proyectos
+// ============================================
+
+/**
+ * ESTE ARCHIVO NO SE COMPILA — ES SÓLO PARA PRESERVACIÓN
+ * 
+ * Contenía la tabla de Análisis de Valor Ganado (EVM)
+ * que fue removida del Dashboard principal.
+ */
+
+/*
+{/* Earned Value Analysis Section */}
+<div className="rounded-xl border border-steel-200 bg-white p-6 shadow-card">
+  <div className="flex items-center justify-between mb-6">
+    <div>
+      <h3 className="text-lg font-bold text-steel-800">Analisis de Valor Ganado (EVM)</h3>
+      <p className="text-sm text-steel-500">Metricas de rendimiento del proyecto vs linea base</p>
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="px-3 py-1 rounded-full bg-primary-50 text-primary-700 text-xs font-bold border border-primary-100">
+        Corte: {dynamicSPI.weekDate}
+      </span>
+    </div>
+  </div>
+
+  <div className="overflow-x-auto">
+    <table className="w-full text-sm text-left">
+      <thead>
+        <tr className="border-b border-steel-100">
+          <th className="px-4 py-3 font-bold text-steel-700">Indicador</th>
+          <th className="px-4 py-3 font-bold text-steel-700">Sigla</th>
+          <th className="px-4 py-3 font-bold text-steel-700 text-right">Valor</th>
+          <th className="px-4 py-3 font-bold text-steel-700">Detalle / Formula</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-steel-50">
+        <tr className="hover:bg-steel-50/50">
+          <td className="px-4 py-3 text-steel-700">Presupuesto a la Terminacion</td>
+          <td className="px-4 py-3 font-mono text-xs text-primary-600 font-semibold">BAC</td>
+          <td className="px-4 py-3 text-right font-semibold text-steel-800">{formatCOP(data.earned_value.bac)}</td>
+          <td className="px-4 py-3 text-steel-400 text-xs">Precio global fijo de la oferta</td>
+        </tr>
+        <tr className="hover:bg-steel-50/50">
+          <td className="px-4 py-3 text-steel-700">Valor Planificado</td>
+          <td className="px-4 py-3 font-mono text-xs text-primary-600 font-semibold">PV / BCWS</td>
+          <td className="px-4 py-3 text-right font-semibold text-steel-800">{formatCOP(dynamicSPI.pvAmount)}</td>
+          <td className="px-4 py-3 text-steel-400 text-xs">{dynamicSPI.prog.toFixed(1)}% — Trabajo planificado a semana {dynamicSPI.weekLabel} (linea base revisada)</td>
+        </tr>
+        <tr className="hover:bg-steel-50/50">
+          <td className="px-4 py-3 text-steel-700">Valor Ganado</td>
+          <td className="px-4 py-3 font-mono text-xs text-primary-600 font-semibold">EV / BCWP</td>
+          <td className="px-4 py-3 text-right font-semibold text-steel-800">{formatCOP(dynamicSPI.evAmount)}</td>
+          <td className="px-4 py-3 text-steel-400 text-xs">{dynamicSPI.real.toFixed(1)}% — Trabajo realmente completado (Curva S semana {dynamicSPI.weekLabel}, {dynamicSPI.weekDate})</td>
+        </tr>
+        <tr className="hover:bg-steel-50/50">
+          <td className="px-4 py-3 text-steel-700">Costo Real</td>
+          <td className="px-4 py-3 font-mono text-xs text-primary-600 font-semibold">AC / ACWP</td>
+          <td className="px-4 py-3 text-right font-semibold text-steel-800">{formatCOP(dynamicCPI.ac)}</td>
+          <td className="px-4 py-3 text-steel-400 text-xs">Lo que realmente se ha gastado — Fuente: Flujo de Caja</td>
+        </tr>
+        <tr className={`${dynamicCPI.cpi >= 1 ? 'bg-emerald-50/60' : 'bg-red-50/60'} cursor-pointer hover:bg-emerald-100/60 transition`} onClick={() => setShowCPIDetail(true)}>
+          <td className="px-4 py-3 font-semibold text-steel-800">Indice Rendimiento Costo</td>
+          <td className="px-4 py-3 font-mono text-xs text-emerald-700 font-bold">CPI</td>
+          <td className={`px-4 py-3 text-right font-bold text-lg ${dynamicCPI.cpi >= 1 ? 'text-emerald-700' : 'text-red-700'}`}>{dynamicCPI.cpi.toFixed(2)}</td>
+          <td className="px-4 py-3 text-steel-600 text-xs">EV/AC — {dynamicCPI.cpi >= 1 ? `${((dynamicCPI.cpi - 1) * 100).toFixed(0)}% eficiente` : `${((1 - dynamicCPI.cpi) * 100).toFixed(0)}% sobrecosto`}. Fuente: Caso de Negocio + Flujo de Caja. <span className="text-primary-600 underline">Ver detalle</span></td>
+        </tr>
+        <tr className={`${dynamicSPI.spi >= 1 ? 'bg-emerald-50/60' : 'bg-amber-50/60'}`}>
+          <td className="px-4 py-3 font-semibold text-steel-800">SPI (Linea Base Revisada)</td>
+          <td className={`px-4 py-3 font-mono text-xs font-bold ${dynamicSPI.spi >= 1 ? 'text-emerald-700' : 'text-amber-700'}`}>SPI Rev.</td>
+          <td className={`px-4 py-3 text-right font-bold text-lg ${dynamicSPI.spi >= 1 ? 'text-emerald-700' : 'text-amber-700'}`}>{dynamicSPI.spi.toFixed(2)}</td>
+          <td className="px-4 py-3 text-steel-600 text-xs">{dynamicSPI.spi >= 1 ? 'En tiempo' : `${Math.abs(dynamicSPI.desviacion).toFixed(1)}% atrasado`} vs cronograma revisado — Semana {dynamicSPI.weekLabel} ({dynamicSPI.weekDate})</td>
+        </tr>
+        <tr className="bg-red-50/60">
+          <td className="px-4 py-3 font-semibold text-steel-800">SPI (Linea Base Contractual 27 Nov)</td>
+          <td className="px-4 py-3 font-mono text-xs text-red-700 font-bold">SPI Contr.</td>
+          <td className="px-4 py-3 text-right font-bold text-red-700 text-lg">{data.earned_value.spi_contractual.toFixed(2)}</td>
+          <td className="px-4 py-3 text-steel-600 text-xs">27% atrasado vs plan original (405 dias, fin 30 Jul 2026). Re-baseline de +48 dias</td>
+        </tr>
+        <tr className="bg-emerald-50/60">
+          <td className="px-4 py-3 font-semibold text-steel-800">Estimacion a la Terminacion</td>
+          <td className="px-4 py-3 font-mono text-xs text-primary-600 font-bold">EAC</td>
+          <td className="px-4 py-3 text-right font-bold text-steel-800">{formatCOP(eacConFin)}</td>
+          <td className="px-4 py-3 text-steel-600 text-xs">Costo Total Caso de Negocio (con financiacion) — Fuente: Caso de Negocio (sincronizado)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+*/
