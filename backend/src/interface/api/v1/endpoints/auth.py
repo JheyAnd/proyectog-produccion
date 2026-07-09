@@ -33,6 +33,9 @@ class UserUpdateRequest(BaseModel):
     full_name: Optional[str] = None
     role: Optional[str] = None
     is_active: Optional[bool] = None
+    allowed_directors: Optional[str] = None
+    allowed_projects: Optional[str] = None
+    module_features: Optional[str] = None
 
 @router.get("/me")
 async def get_current_user(
@@ -87,7 +90,10 @@ async def get_current_user(
         "email": user.email,
         "full_name": user.full_name,
         "role": user.role,
-        "is_active": user.is_active
+        "is_active": user.is_active,
+        "allowed_directors": user.allowed_directors,
+        "allowed_projects": user.allowed_projects,
+        "module_features": user.module_features
     }
 
 
@@ -185,7 +191,10 @@ async def login(
             "email": user.email,
             "full_name": user.full_name,
             "role": user.role,
-            "is_active": user.is_active
+            "is_active": user.is_active,
+            "allowed_directors": user.allowed_directors,
+            "allowed_projects": user.allowed_projects,
+            "module_features": user.module_features
         }
     }
 
@@ -272,7 +281,10 @@ async def validate_token(
             "email": user.email,
             "full_name": user.full_name,
             "role": user.role,
-            "is_active": user.is_active
+            "is_active": user.is_active,
+            "allowed_directors": user.allowed_directors,
+            "allowed_projects": user.allowed_projects,
+            "module_features": user.module_features
         }
     }
 
@@ -307,6 +319,9 @@ async def list_users(
             "full_name": u.full_name,
             "role": u.role,
             "is_active": u.is_active,
+            "allowed_directors": u.allowed_directors,
+            "allowed_projects": u.allowed_projects,
+            "module_features": u.module_features,
             "last_login": None, # o la fecha correspondiente si está en el modelo
             "created_at": None
         }
@@ -359,7 +374,10 @@ async def create_user(
         "email": local_user.email,
         "full_name": local_user.full_name,
         "role": local_user.role,
-        "is_active": local_user.is_active
+        "is_active": local_user.is_active,
+        "allowed_directors": local_user.allowed_directors,
+        "allowed_projects": local_user.allowed_projects,
+        "module_features": local_user.module_features
     }
 
 @router.put("/users/{user_id}")
@@ -388,6 +406,12 @@ async def update_user(
         if local_user.is_active != user_data.is_active:
             needs_sync = True
         local_user.is_active = user_data.is_active
+    if user_data.allowed_directors is not None:
+        local_user.allowed_directors = user_data.allowed_directors
+    if user_data.allowed_projects is not None:
+        local_user.allowed_projects = user_data.allowed_projects
+    if user_data.module_features is not None:
+        local_user.module_features = user_data.module_features
         
     await user_service._user_repository.save(local_user)
     
@@ -400,7 +424,10 @@ async def update_user(
         "email": local_user.email,
         "full_name": local_user.full_name,
         "role": local_user.role,
-        "is_active": local_user.is_active
+        "is_active": local_user.is_active,
+        "allowed_directors": local_user.allowed_directors,
+        "allowed_projects": local_user.allowed_projects,
+        "module_features": local_user.module_features
     }
 
 @router.delete("/users/{user_id}")

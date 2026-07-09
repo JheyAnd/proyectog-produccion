@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 @dataclass
 class User:
@@ -8,3 +9,6 @@ class User:
     full_name: str
     role: str
     is_active: bool
+    allowed_directors: Optional[str] = "ALL"
+    allowed_projects: Optional[str] = "ALL"
+    module_features: Optional[str] = None

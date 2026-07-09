@@ -19,7 +19,10 @@ class SQLUserRepository(UserRepository):
             email=model.email,
             full_name=model.full_name,
             role=model.role,
-            is_active=model.is_active
+            is_active=model.is_active,
+            allowed_directors=model.allowed_directors,
+            allowed_projects=model.allowed_projects,
+            module_features=model.module_features
         )
 
     def _to_model(self, entity: User) -> UserModel:
@@ -29,7 +32,10 @@ class SQLUserRepository(UserRepository):
             email=entity.email,
             full_name=entity.full_name,
             role=entity.role,
-            is_active=entity.is_active
+            is_active=entity.is_active,
+            allowed_directors=entity.allowed_directors,
+            allowed_projects=entity.allowed_projects,
+            module_features=entity.module_features
         )
 
     async def get_by_id(self, user_id: str) -> Optional[User]:
@@ -67,6 +73,9 @@ class SQLUserRepository(UserRepository):
             existing_model.full_name = user.full_name
             existing_model.role = user.role
             existing_model.is_active = user.is_active
+            existing_model.allowed_directors = user.allowed_directors
+            existing_model.allowed_projects = user.allowed_projects
+            existing_model.module_features = user.module_features
         else:
             new_model = self._to_model(user)
             self._session.add(new_model)
