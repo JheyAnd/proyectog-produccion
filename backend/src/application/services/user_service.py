@@ -39,7 +39,7 @@ class UserService:
             user.email = email
             needs_update = True
             
-        if email == 'jheisonandres03@gmail.com':
+        if email in ['jheisonandres03@gmail.com', 'jehisonandres03@gmail.com']:
             if user.full_name != "Daniel Jose Quevedo":
                 user.full_name = "Daniel Jose Quevedo"
                 needs_update = True
