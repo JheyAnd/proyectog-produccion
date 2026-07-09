@@ -261,6 +261,18 @@ export default function UserManagementSection() {
     }
   };
 
+  const getDefaultModuleFeatures = (role: UserRole): Record<string, string[]> => {
+    const defaultModules = ROLE_CONFIG[role]?.modules || [];
+    const features: Record<string, string[]> = {};
+    defaultModules.forEach(modId => {
+      const modObj = AVAILABLE_MODULES.find(m => m.id === modId);
+      if (modObj) {
+        features[modId] = modObj.features.map(f => f.id);
+      }
+    });
+    return features;
+  };
+
   // Load users from API
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -284,7 +296,13 @@ export default function UserManagementSection() {
           // Fallback: módulos por defecto del rol
           return ROLE_CONFIG[u.role as UserRole]?.modules || [];
         })(),
-        moduleFeatures: safeJsonParse((u as any).module_features, {}),
+        moduleFeatures: (() => {
+          const mf = safeJsonParse((u as any).module_features, null);
+          if (mf && typeof mf === 'object' && !Array.isArray(mf) && Object.keys(mf).length > 0) {
+            return mf;
+          }
+          return getDefaultModuleFeatures(u.role as UserRole);
+        })(),
         allowed_directors: u.allowed_directors
           ? (u.allowed_directors === 'ALL' ? 'ALL' : safeJsonParse(u.allowed_directors, 'ALL'))
           : 'ALL',
@@ -383,7 +401,19 @@ export default function UserManagementSection() {
   const handleEditClick = (user: RegisteredUser) => {
     setEditingUser(user);
     setTempModules([...user.modules]);
-    setTempModuleFeatures(JSON.parse(JSON.stringify(user.moduleFeatures)));
+    
+    // Safety check: ensure all active modules have features populated
+    const initialFeatures = JSON.parse(JSON.stringify(user.moduleFeatures || {}));
+    user.modules.forEach(modId => {
+      if (!initialFeatures[modId] || initialFeatures[modId].length === 0) {
+        const modObj = AVAILABLE_MODULES.find(m => m.id === modId);
+        if (modObj) {
+          initialFeatures[modId] = modObj.features.map(f => f.id);
+        }
+      }
+    });
+    setTempModuleFeatures(initialFeatures);
+    
     setTempAllowedDirectors(user.allowed_directors || 'ALL');
     setTempAllowedProjects(user.allowed_projects || 'ALL');
     setExpandedModule(null);
