@@ -40,8 +40,8 @@ class UserService:
             needs_update = True
             
         if email in ['jheisonandres03@gmail.com', 'jehisonandres03@gmail.com']:
-            if user.full_name != "Daniel Jose Quevedo":
-                user.full_name = "Daniel Jose Quevedo"
+            if user.full_name != "David Jose":
+                user.full_name = "David Jose"
                 needs_update = True
         elif user.full_name != full_name and full_name != "Usuario Pandora":
             user.full_name = full_name
